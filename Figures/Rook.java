@@ -68,10 +68,10 @@ public class Rook extends Figure {
             if (getPosition().getX() < newPosition.getX()) {
 
                 for (int i = getPosition().getX(); i <= newPosition.getX(); i++) {
-                    if (board.getField()[i][sameCoordY] != null && i != newPosition.getY()) {
+                    if (board.getField()[i][sameCoordY] != null && i != newPosition.getX()) {
                         return false;
                     }
-                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getY()) {
+                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
                         hasMoved = true;
                         return true;
                     }
@@ -81,10 +81,10 @@ public class Rook extends Figure {
             } else {
 
                 for (int i = getPosition().getX(); i >= newPosition.getX(); i--) {
-                    if (board.getField()[i][sameCoordY] != null && i != newPosition.getY()) {
+                    if (board.getField()[i][sameCoordY] != null && i != newPosition.getX()) {
                         return false;
                     }
-                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getY()) {
+                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
                         hasMoved = true;
                         return true;
                     }
