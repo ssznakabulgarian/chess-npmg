@@ -17,8 +17,8 @@ public class Rook extends Figure{
     @Override
     public boolean isMoveValid(Position newPosition){
         
-        //check if move possible
-        if(newPosition.getX() < 0 && newPosition.getY() < 0) return false;
+        //check if move 
+        if(newPosition.getX() < 0 && newPosition.getY() < 0 && newPosition.getX() > 7 && newPosition.getY() > 7) return false;
         if(getPosition().getX() == newPosition.getX() && getPosition().getY() == newPosition.getY()) return false;
         if(getPosition().getX() != newPosition.getX() && getPosition().getY() != newPosition.getY()) return false;
 
@@ -29,23 +29,59 @@ public class Rook extends Figure{
         //check if same colour figure is in the way
 
         if(sameCoordX != -1){
-            for(int i = getPosition().getY(); i < newPosition.getY(); i++){
-                if(board.getField()[sameCoordX][i] != null && board.getField()[sameCoordX][i].getColour() == getColour()){
-                    return false;
+            if(getPosition().getY() < newPosition.getY()){
+                for(int i = getPosition().getY(); i <= newPosition.getY(); i++){
+                    if(board.getField()[sameCoordX][i] != null && i != newPosition.getY()){
+                        return false;
+                    }
+                    if(board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()){
+                        hasMoved = true;
+                        return true;
+                    }
                 }
+                hasMoved = true;
+                return true;
+            }else{
+                for(int i = getPosition().getY(); i >= newPosition.getY(); i--){
+                    if(board.getField()[sameCoordX][i] != null && i != newPosition.getY()){
+                        return false;
+                    }
+                    if(board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()){
+                        hasMoved = true;
+                        return true;
+                    }                
+                }
+                hasMoved = true;
+                return true;
             }
-            hasMoved = true;
-            return true;
         }
 
         if(sameCoordY != -1){
-            for(int i = getPosition().getX(); i < newPosition.getX(); i++){
-                if(board.getField()[i][sameCoordY] != null && board.getField()[i][sameCoordY].getColour() == getColour()){
-                    return false;
+            if(getPosition().getX() < newPosition.getX()){
+                for(int i = getPosition().getX(); i <= newPosition.getX(); i++){
+                    if(board.getField()[i][sameCoordY] != null && i != newPosition.getY()){
+                        return false;
+                    }
+                    if(board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getY()){
+                        hasMoved = true;
+                        return true;
+                    }
                 }
+                hasMoved = true;
+                return true;
+            }else{
+                for(int i = getPosition().getX(); i >= newPosition.getX(); i--){
+                    if(board.getField()[i][sameCoordY] != null && i != newPosition.getY()){
+                        return false;
+                    }
+                    if(board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getY()){
+                        hasMoved = true;
+                        return true;
+                    }
+                }
+                hasMoved = true;
+                return true;
             }
-            hasMoved = true;
-            return true;
         }
 
         return false;
