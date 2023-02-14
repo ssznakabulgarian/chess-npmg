@@ -16,7 +16,7 @@ public class Bishop extends Figure{
     boolean isMoveValid(Position newPosition) {
         if(!board.isSquareEmpty(newPosition)){
             /*if(board.getFigureAt(newPosition).equals(Figures.King)){
-                ask about figures
+                ask about type figures
             }*/
             if (arr[newPosition.x][newPosition.y].getColour().equals(arr[getPosition().x][getPosition().y])){
                 return false;
