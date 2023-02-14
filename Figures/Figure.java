@@ -1,27 +1,33 @@
 package Figures;
 
+import Common.Colour;
+import Common.InvalidMoveException;
 import Common.Position;
 import GameLogic.Board;
+import GameLogic.IBoard;
 
 public abstract class Figure {
-    private Position position;
-    private boolean Colour;
-    private Board board;
+    protected Position position;
+    protected Colour colour;
+    protected IBoard board;
 
     public Position getPosition() {
         return position;
     }
 
-    public boolean isColour() {
-        return Colour;
+    public Colour getColour() {
+        return colour;
     }
 
-    public Figure(Position position, boolean Color, Board board){
+    public Figure(Position position, Colour colour, IBoard board){
         position = this.position;
-        Color = this.Colour;
+        colour = this.colour;
         board = this.board;
     }
 
     abstract boolean isMoveValid(Position newPosition);
-    abstract void Move(Position newPosition);
+    public void Move(Position newPosition) throws InvalidMoveException {
+        if(isMoveValid(newPosition)) position = newPosition;
+        else throw new InvalidMoveException("an invalid move was attempted", this, newPosition);
+    }
 }
