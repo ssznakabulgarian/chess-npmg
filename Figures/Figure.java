@@ -23,5 +23,5 @@ public abstract class Figure {
     }
 
     abstract boolean isMoveValid(Position newPosition);
-    abstract void Move(Position newPosition);
+    //abstract void Move(Position newPosition);
 }
