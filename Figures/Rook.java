@@ -5,13 +5,14 @@ import Common.Position;
 import GameLogic.Board;
 
 public class Rook extends Figure {
-    private static boolean hasMoved = false;
+    private boolean hasMoved = false;
 
     public Rook(Position position, Colour Color, Board board, boolean hasMoved) {
         super(position, Color, board);
+        this.hasMoved = hasMoved;
     }
 
-    public static boolean getHasMoved() {
+    public boolean getHasMoved() {
         return hasMoved;
     }
 
