@@ -15,10 +15,10 @@ public class Bishop extends Figure{
     @Override
     boolean isMoveValid(Position newPosition) {
         if(!board.isSquareEmpty(newPosition)){
-            /*if(board.getFigureAt(newPosition).equals(Figures.King)){
-                ask about type figures
-            }*/
-            if (arr[newPosition.x][newPosition.y].getColour().equals(arr[getPosition().x][getPosition().y])){
+            if(board.getFigureAt(newPosition) instanceof King){
+                return false;
+            }
+            if (arr[newPosition.x][newPosition.y].getColour().equals(arr[getPosition().x][getPosition().y].getColour())){
                 return false;
             }
         }
@@ -29,9 +29,7 @@ public class Bishop extends Figure{
         if(x == y){
 
             for (int i = 0; i<x; i++){
-                Position between = null;
-                between.setX(getPosition().x+i);
-                between.setY(getPosition().y+i);
+                Position between = new Position((getPosition().x+i), (getPosition().y+i));
                 if (!board.isSquareEmpty(between)){
                     return false;
                 }
