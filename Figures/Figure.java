@@ -4,11 +4,12 @@ import Common.Colour;
 import Common.InvalidMoveException;
 import Common.Position;
 import GameLogic.Board;
+import GameLogic.IBoard;
 
 public abstract class Figure {
     protected Position position;
     protected Colour colour;
-    protected Board board;
+    protected IBoard board;
 
     public Position getPosition() {
         return position;
@@ -18,7 +19,7 @@ public abstract class Figure {
         return colour;
     }
 
-    public Figure(Position position,Colour colour , Board board){
+    public Figure(Position position, Colour colour, IBoard board){
         position = this.position;
         colour = this.colour;
         board = this.board;
