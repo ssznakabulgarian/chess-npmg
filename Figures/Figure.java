@@ -18,7 +18,7 @@ public abstract class Figure {
         return colour;
     }
 
-    public Figure(Position position, Colour colour, Board board){
+    public Figure(Position position,Colour colour , Board board){
         position = this.position;
         colour = this.colour;
         board = this.board;
