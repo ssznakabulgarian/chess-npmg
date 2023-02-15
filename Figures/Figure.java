@@ -20,9 +20,9 @@ public abstract class Figure {
     }
 
     public Figure(Position position, Colour colour, IBoard board){
-        position = this.position;
-        colour = this.colour;
-        board = this.board;
+        this.position = position;
+        this.colour = colour;
+        this.board = board;
     }
 
     abstract boolean isMoveValid(Position newPosition);
