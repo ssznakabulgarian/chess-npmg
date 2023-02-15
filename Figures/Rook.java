@@ -18,7 +18,7 @@ public class Rook extends Figure {
     @Override
     public boolean isMoveValid(Position newPosition) {
 
-        // check if move
+        // check if move is valid
         if (newPosition.getX() < 0 && newPosition.getY() < 0 && newPosition.getX() > 7 && newPosition.getY() > 7)
             return false;
         if (getPosition().getX() == newPosition.getX() && getPosition().getY() == newPosition.getY())
