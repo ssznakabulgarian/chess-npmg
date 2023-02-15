@@ -20,7 +20,7 @@ public class Rook extends Figure {
     public boolean isMoveValid(Position newPosition) {
 
         // check if move is valid
-        if (newPosition.getX() < 0 && newPosition.getY() < 0 && newPosition.getX() > 7 && newPosition.getY() > 7)
+        if (newPosition.getX() < 0 || newPosition.getY() < 0 || newPosition.getX() > 7 || newPosition.getY() > 7)
             return false;
         if (getPosition().getX() == newPosition.getX() && getPosition().getY() == newPosition.getY())
             return false;
