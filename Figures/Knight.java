@@ -5,41 +5,45 @@ import Common.Position;
 import GameLogic.Board;
 
 public class Knight extends Figure{
-    public Knight(Position startingPosition, Colour Colour, Board board) {
-        super(startingPosition, Colour, board);
+    public Knight(Position position, Colour colour, Board board) {
+        super(position, colour, board);
     }
 
-    public static Figure[][] testField = new Figure[8][8];
-
-
-    @java.lang.Override
     boolean isMoveValid(Position newPosition) {
-        Figure[][] boardArray = testField;
-        if (boardArray[newPosition.x][newPosition.y] == null ||
-            boardArray[newPosition.x][newPosition.y].getColour() != boardArray[getPosition().x][getPosition().y].getColour())
+        Figure[][] boardArray = board.getField();
+        if (board.isSquareEmpty(newPosition) ||
+            boardArray[newPosition.x][newPosition.y].getColour() != this.colour)
         {
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+2][getPosition().y+1]) {
+            if (getPosition().x+2 < 8 && getPosition().y+1 < 8 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+2][getPosition().y+1]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+2][getPosition().y-1]) {
+            if (getPosition().x+2 < 8 && getPosition().y-1 > -1 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+2][getPosition().y-1]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+1][getPosition().y+2]) {
+            if (getPosition().x+1 < 8 && getPosition().y+2 < 8 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+1][getPosition().y+2]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+1][getPosition().y-2]) {
+            if (getPosition().x+1 < 8 && getPosition().y-2 > -1 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x+1][getPosition().y-2]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-1][getPosition().y+2]) {
+            if (getPosition().x-1 > -1 && getPosition().y+2 < 8 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-1][getPosition().y+2]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-1][getPosition().y-2]) {
+            if (getPosition().x-1 > -1 && getPosition().y-2 > -1 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-1][getPosition().y-2]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-2][getPosition().y+1]) {
+            if (getPosition().x-2 > -1 && getPosition().y+1 < 8 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-2][getPosition().y+1]) {
                 return true;
             }
-            if (boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-2][getPosition().y-1]) {
+            if (getPosition().x-2 > -1 && getPosition().y-1 > -1 &&
+                boardArray[newPosition.x][newPosition.y] == boardArray[getPosition().x-2][getPosition().y-1]) {
                 return true;
             }
         }
