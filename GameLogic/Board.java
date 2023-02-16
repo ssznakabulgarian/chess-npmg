@@ -7,7 +7,6 @@ import Figures.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.MissingFormatArgumentException;
 
 public class Board implements IBoard{
     private List<Figure> figures;
@@ -19,6 +18,9 @@ public class Board implements IBoard{
     public Board() {
         this.figures = new ArrayList<Figure>();
         populateBoard();
+    }
+    public List<Figure> getFigures(){
+        return new ArrayList<>(figures);
     }
     public boolean isPlayerToMoveInCheck() {
         return isPlayerToMoveInCheck;
