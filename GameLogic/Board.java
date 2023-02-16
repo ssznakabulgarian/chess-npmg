@@ -19,6 +19,9 @@ public class Board implements IBoard{
         this.figures = new ArrayList<Figure>();
         populateBoard();
     }
+    public List<Figure> getFigures(){
+        return new ArrayList<>(figures);
+    }
     public boolean isPlayerToMoveInCheck() {
         return isPlayerToMoveInCheck;
     }
@@ -27,9 +30,6 @@ public class Board implements IBoard{
     }
     public Figure getSelectedFigure() {
         return selectedFigure;
-    }
-    public List<Figure> getFigures() {
-        return figures;
     }
     public Colour getPlayerToMove() {
         return playerToMove;
