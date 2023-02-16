@@ -23,8 +23,14 @@ public class Board implements IBoard{
         return new ArrayList<>(figures);
     }
     public boolean isPlayerToMoveInCheck() {
-        return isPlayerToMoveInCheck;
+        for (Figure Figure : figures) {
+            if(Figure.isMoveValid(playerToMove == Colour.white? WhiteKing.getPosition() : BlackKing.getPosition())){
+                return true;
+            }
+        }
+        return false;
     }
+
     public void setPlayerToMoveInCheck(boolean playerToMoveInCheck) {
         isPlayerToMoveInCheck = playerToMoveInCheck;
     }

@@ -25,7 +25,7 @@ public abstract class Figure {
         this.board = board;
     }
 
-    abstract boolean isMoveValid(Position newPosition);
+    public abstract boolean isMoveValid(Position newPosition);
     public void Move(Position newPosition) throws InvalidMoveException {
         if(isMoveValid(newPosition)) position = newPosition;
         else throw new InvalidMoveException("an invalid move was attempted", this, newPosition);

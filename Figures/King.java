@@ -10,11 +10,6 @@ public class King extends Figure {
         super(position, colour, board);
     }
 
-    public boolean isInCheck(){
-
-        return false;
-    }
-
     @Override
     public boolean isMoveValid(Position newPosition){
         if(position.getX() - newPosition.getX() <= 1  && position.getX() - newPosition.getX()  >= 0 &&  position.getY() - newPosition.getY() <= 1  && position.getY() - newPosition.getY()  >= 0 ) {
