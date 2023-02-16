@@ -5,15 +5,8 @@ import Common.Position;
 import GameLogic.Board;
 
 public class Rook extends Figure {
-    private boolean hasMoved = false;
-
     public Rook(Position position, Colour Color, Board board, boolean hasMoved) {
         super(position, Color, board);
-        this.hasMoved = hasMoved;
-    }
-
-    public boolean getHasMoved() {
-        return hasMoved;
     }
 
     @Override
@@ -43,11 +36,9 @@ public class Rook extends Figure {
                         return false;
                     }
                     if (board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()) {
-                        hasMoved = true;
                         return true;
                     }
                 }
-                hasMoved = true;
                 return true;
             } else {
 
@@ -56,11 +47,9 @@ public class Rook extends Figure {
                         return false;
                     }
                     if (board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()) {
-                        hasMoved = true;
                         return true;
                     }
                 }
-                hasMoved = true;
                 return true;
             }
         }
@@ -73,11 +62,9 @@ public class Rook extends Figure {
                         return false;
                     }
                     if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
-                        hasMoved = true;
                         return true;
                     }
                 }
-                hasMoved = true;
                 return true;
             } else {
 
@@ -86,11 +73,9 @@ public class Rook extends Figure {
                         return false;
                     }
                     if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
-                        hasMoved = true;
                         return true;
                     }
                 }
-                hasMoved = true;
                 return true;
             }
         }
