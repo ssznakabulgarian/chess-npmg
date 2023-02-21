@@ -5,7 +5,7 @@ import Common.Position;
 import GameLogic.Board;
 
 public class Rook extends Figure {
-    public Rook(Position position, Colour Color, Board board, boolean hasMoved) {
+    public Rook(Position position, Colour Color, Board board) {
         super(position, Color, board);
     }
 
