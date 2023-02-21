@@ -14,7 +14,6 @@ public class Board implements IBoard{
     private King WhiteKing = new King(new Position(4,0), Colour.white, this);
     private King BlackKing = new King(new Position(4,7), Colour.black, this);
     private Colour playerToMove = Colour.white;
-    private boolean isPlayerToMoveInCheck = false;
     public Board() {
         this.figures = new ArrayList<Figure>();
         populateBoard();
@@ -23,10 +22,7 @@ public class Board implements IBoard{
         return new ArrayList<>(figures);
     }
     public boolean isPlayerToMoveInCheck() {
-        return isPlayerToMoveInCheck;
-    }
-    public void setPlayerToMoveInCheck(boolean playerToMoveInCheck) {
-        isPlayerToMoveInCheck = playerToMoveInCheck;
+        return playerToMove==Colour.white ? WhiteKing.isInCheck() : BlackKing.isInCheck();
     }
     public Figure getSelectedFigure() {
         return selectedFigure;
@@ -85,7 +81,6 @@ public class Board implements IBoard{
         else{
             selectedFigure.Move(position);
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
-            isPlayerToMoveInCheck = playerToMove.equals(Colour.white) ? WhiteKing.isInCheck() : BlackKing.isInCheck();
         }
     }
 }
