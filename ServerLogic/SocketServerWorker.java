@@ -1,14 +1,15 @@
 package ServerLogic;
 
 import Common.Colour;
+import Common.InvalidMoveException;
 
 import java.io.*;
 import java.net.Socket;
 
 public class SocketServerWorker extends Thread {
-    private Socket socket;
-    private SocketServer parent;
-    private Colour player;
+    private final Socket socket;
+    private final SocketServer parent;
+    private final Colour player;
 
     public SocketServerWorker(Socket clientSocket, SocketServer server, Colour player) {
         this.socket = clientSocket;
@@ -29,7 +30,7 @@ public class SocketServerWorker extends Thread {
                     parent.onPlayerMessageReceived(player, line);
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | InvalidMoveException e) {
             throw new RuntimeException(e);
         }
     }
