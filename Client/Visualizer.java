@@ -45,13 +45,20 @@ public class Visualizer extends JFrame {
 
     private void onFieldClicked(MouseEvent e){
         Position clickPosition = new Position(e.getX()/100, (e.getY()-WindowUpperMargin)/100);
-        if (selectedAt != null) {
-            repaint(selectedAt.getX()*100, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
-            if(selectedAt.equals(clickPosition)) selectedAt=null;
-        } else if (!selectedAt.equals(clickPosition)){ //the first click doesn't work
+        if (selectedAt == null) {
             selectedAt = clickPosition;
             repaint(selectedAt.getX() * 100, (selectedAt.getY() * 100) + WindowUpperMargin, 100, 100);
+            return;
         }
+        if (selectedAt.equals(clickPosition)){
+            selectedAt = null;
+            repaint(clickPosition.getX() * 100, (clickPosition.getY() * 100) + WindowUpperMargin, 100, 100);
+            return;
+        }
+        Position oldSelection = new Position(selectedAt);
+        selectedAt=clickPosition;
+        repaint(selectedAt.getX()*100, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
+        repaint(oldSelection.getX()*100, (oldSelection.getY()*100)+WindowUpperMargin, 100, 100);
     }
 
     void drawBoard(Graphics g) {
@@ -75,9 +82,6 @@ public class Visualizer extends JFrame {
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
             graphics.fillRect(selectedAt.getX()*100, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
-        }
-        if (selectedAt == selectedAt) {
-
         }
     }
 
