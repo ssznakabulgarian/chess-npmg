@@ -21,7 +21,7 @@ public class Rook extends Figure {
             return false;
 
         // check if on newPosition is a same colour figure
-        if(board.getField()[newPosition.getX()][newPosition.getY()].getColour().equals(getColour()))
+        if(board.getField()[newPosition.getX()][newPosition.getY()] != null && board.getField()[newPosition.getX()][newPosition.getY()].getColour().equals(getColour()))
             return false;
 
         // determine whether a move is vertical or horizontal
