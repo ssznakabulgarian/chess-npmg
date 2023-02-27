@@ -5,7 +5,7 @@ import Common.Position;
 import GameLogic.Board;
 
 public class Rook extends Figure {
-    public Rook(Position position, Colour Color, Board board, boolean hasMoved) {
+    public Rook(Position position, Colour Color, Board board) {
         super(position, Color, board);
     }
 
@@ -28,26 +28,34 @@ public class Rook extends Figure {
 
         // check if same colour figure is in the way
 
+        System.out.println(sameCoordX);
         if (sameCoordX != -1) {
             if (getPosition().getY() < newPosition.getY()) {
-
-                for (int i = getPosition().getY(); i <= newPosition.getY(); i++) {
+                for (int i = getPosition().getY() + 1; i <= newPosition.getY(); i++) {
                     if (board.getField()[sameCoordX][i] != null && i != newPosition.getY()) {
                         return false;
                     }
-                    if (board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()) {
-                        return true;
+
+                    if (board.getField()[sameCoordX][i] != null && i == newPosition.getY()) {
+                        if(board.getField()[sameCoordX][i].getColour() != getColour()){
+                            return true;
+                        }else{
+                            return false;
+                        }
                     }
                 }
                 return true;
             } else {
-
-                for (int i = getPosition().getY(); i >= newPosition.getY(); i--) {
+                for (int i = getPosition().getY() - 1; i >= newPosition.getY(); i--) {
                     if (board.getField()[sameCoordX][i] != null && i != newPosition.getY()) {
                         return false;
                     }
-                    if (board.getField()[sameCoordX][i].getColour() != getColour() && i == newPosition.getY()) {
-                        return true;
+                    if (board.getField()[sameCoordX][i] != null && i == newPosition.getY()) {
+                        if(board.getField()[sameCoordX][i].getColour() != getColour()){
+                            return true;
+                        }else{
+                            return false;
+                        }
                     }
                 }
                 return true;
@@ -56,24 +64,33 @@ public class Rook extends Figure {
 
         if (sameCoordY != -1) {
             if (getPosition().getX() < newPosition.getX()) {
-
-                for (int i = getPosition().getX(); i <= newPosition.getX(); i++) {
+                for (int i = getPosition().getX() + 1; i <= newPosition.getX(); i++) {
                     if (board.getField()[i][sameCoordY] != null && i != newPosition.getX()) {
                         return false;
                     }
-                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
-                        return true;
+                    if (board.getField()[i][sameCoordY] != null && i == newPosition.getX()) {
+
+                        if(board.getField()[i][sameCoordY].getColour() != getColour()){
+                            return true;
+                        }else{
+                            return false;
+                        }
+
                     }
                 }
                 return true;
             } else {
 
-                for (int i = getPosition().getX(); i >= newPosition.getX(); i--) {
+                for (int i = getPosition().getX() - 1; i >= newPosition.getX(); i--) {
                     if (board.getField()[i][sameCoordY] != null && i != newPosition.getX()) {
                         return false;
                     }
-                    if (board.getField()[i][sameCoordY].getColour() != getColour() && i == newPosition.getX()) {
-                        return true;
+                    if (board.getField()[i][sameCoordY] != null && i == newPosition.getX()) {
+                        if(board.getField()[i][sameCoordY].getColour() != getColour()){
+                            return true;
+                        }else{
+                            return false;
+                        }
                     }
                 }
                 return true;
