@@ -1,13 +1,16 @@
 package Client;
+import Common.Position;
+
 import java.awt.*;
-import java.awt.geom.Line2D;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.*;
 
 public class Visualizer extends JFrame {
     JFrame frame = new JFrame("Chess");
     JPanel panel = new JPanel();
     private final int WindowUpperMargin = 30;
-
+    private Position selectedAt;
 
     public Visualizer() {
         super("Chess");
@@ -16,9 +19,49 @@ public class Visualizer extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                onFieldClicked(e);
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
 
-    void drawLines(Graphics g) {
+    private void onFieldClicked(MouseEvent e){
+        Position clickPosition = new Position(e.getX()/100, (e.getY()-WindowUpperMargin)/100);
+        if (selectedAt == null) {
+            selectedAt = clickPosition;
+            repaint(selectedAt.getX() * 100, (selectedAt.getY() * 100) + WindowUpperMargin, 100, 100);
+            return;
+        }
+        if (selectedAt.equals(clickPosition)){
+            selectedAt = null;
+            repaint(clickPosition.getX() * 100, (clickPosition.getY() * 100) + WindowUpperMargin, 100, 100);
+            return;
+        }
+        Position oldSelection = new Position(selectedAt);
+        selectedAt=clickPosition;
+        repaint(selectedAt.getX()*100, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
+        repaint(oldSelection.getX()*100, (oldSelection.getY()*100)+WindowUpperMargin, 100, 100);
+    }
+
+    void drawBoard(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -31,9 +74,15 @@ public class Visualizer extends JFrame {
         }
     }
 
+
     public void paint(Graphics g) {
+        Graphics2D graphics = (Graphics2D) g;
         super.paint(g);
-        drawLines(g);
+        drawBoard(g);
+        if (selectedAt != null) {
+            graphics.setColor(Color.RED);
+            graphics.fillRect(selectedAt.getX()*100, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
+        }
     }
 
     public static void main(String[] args) {
