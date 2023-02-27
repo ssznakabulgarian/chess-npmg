@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Board implements IBoard{
     private List<Figure> figures;
+    private List<Figure> capturedFigures;
     private Figure selectedFigure = null;
     private King WhiteKing = new King(new Position(4,0), Colour.white, this);
     private King BlackKing = new King(new Position(4,7), Colour.black, this);
@@ -20,6 +21,9 @@ public class Board implements IBoard{
     }
     public List<Figure> getFigures(){
         return new ArrayList<>(figures);
+    }
+    public List<Figure> getCapturedFigures(){
+        return new ArrayList<>(capturedFigures);
     }
     public boolean isPlayerToMoveInCheck() {
         return playerToMove==Colour.white ? WhiteKing.isInCheck() : BlackKing.isInCheck();
@@ -76,10 +80,17 @@ public class Board implements IBoard{
         if(selection.getColour() != getPlayerToMove()) throw new UnsupportedOperationException("the selected figure is not yours");
         selectedFigure = selection;
     }
-    public void ClickAt(Position position) throws InvalidMoveException, UnsupportedOperationException {
+    public void ClickAt(Position position) throws InvalidMoveException {
         if(selectedFigure == null) SelectAt(position);
         else{
             selectedFigure.Move(position);
+            for (Figure capturedFigure : figures)
+                if(capturedFigure.getPosition().equals(selectedFigure.getPosition()) && !capturedFigure.equals(selectedFigure)) {
+                    figures.remove(capturedFigure);
+                    capturedFigures.add(capturedFigure);
+                    break;
+                }
+            selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
         }
     }
