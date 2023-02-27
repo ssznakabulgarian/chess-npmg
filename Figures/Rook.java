@@ -28,7 +28,6 @@ public class Rook extends Figure {
 
         // check if same colour figure is in the way
 
-        System.out.println(sameCoordX);
         if (sameCoordX != -1) {
             if (getPosition().getY() < newPosition.getY()) {
                 for (int i = getPosition().getY() + 1; i <= newPosition.getY(); i++) {
