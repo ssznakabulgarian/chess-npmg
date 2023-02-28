@@ -4,19 +4,23 @@ import Common.Colour;
 import Common.InvalidMoveException;
 import Common.Position;
 import Figures.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board implements IBoard{
-    private List<Figure> figures;
+@Named
+@ApplicationScoped
+public class Board implements java.io.Serializable, IBoard{
+    private final List<Figure> figures;
     private List<Figure> capturedFigures;
     private Figure selectedFigure = null;
-    private King WhiteKing = new King(new Position(4,0), Colour.white, this);
-    private King BlackKing = new King(new Position(4,7), Colour.black, this);
+    private final King WhiteKing = new King(new Position(4,0), Colour.white, this);
+    private final King BlackKing = new King(new Position(4,7), Colour.black, this);
     private Colour playerToMove = Colour.white;
     public Board() {
-        this.figures = new ArrayList<Figure>();
+        this.figures = new ArrayList<>();
         populateBoard();
     }
     public List<Figure> getFigures(){
