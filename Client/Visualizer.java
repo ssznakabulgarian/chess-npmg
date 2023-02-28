@@ -1,4 +1,5 @@
 package Client;
+import Common.InvalidMoveException;
 import Common.Position;
 import Figures.Figure;
 import GameLogic.Board;
@@ -84,6 +85,11 @@ public class Visualizer extends JFrame {
 
     private void onFieldClicked(MouseEvent e){
         Position clickPosition = new Position((e.getX()-WindowLeftMargin)/fieldSize, (e.getY()-WindowUpperMargin)/fieldSize);
+        try {
+            board.ClickAt(clickPosition);
+        } catch (InvalidMoveException ex) {
+            ex.printStackTrace();
+        }
         if (selectedAt == null) {
             selectedAt = clickPosition;
             repaint(selectedAt.getX() * fieldSize + WindowLeftMargin, (selectedAt.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
