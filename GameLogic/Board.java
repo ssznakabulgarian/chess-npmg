@@ -4,23 +4,31 @@ import Common.Colour;
 import Common.InvalidMoveException;
 import Common.Position;
 import Figures.*;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Board implements IBoard{
-    private List<Figure> figures;
+@Named
+@ApplicationScoped
+public class Board implements java.io.Serializable, IBoard{
+    private final List<Figure> figures;
+    private List<Figure> capturedFigures;
     private Figure selectedFigure = null;
-    private King WhiteKing = new King(new Position(4,0), Colour.white, this);
-    private King BlackKing = new King(new Position(4,7), Colour.black, this);
+    private final King WhiteKing = new King(new Position(4,0), Colour.white, this);
+    private final King BlackKing = new King(new Position(4,7), Colour.black, this);
     private Colour playerToMove = Colour.white;
     private boolean isPlayerToMoveInCheck = false;
     public Board() {
-        this.figures = new ArrayList<Figure>();
+        this.figures = new ArrayList<>();
         populateBoard();
     }
     public List<Figure> getFigures(){
         return new ArrayList<>(figures);
+    }
+    public List<Figure> getCapturedFigures(){
+        return new ArrayList<>(capturedFigures);
     }
     public boolean isPlayerToMoveInCheck() {
         for (Figure Figure : figures) {
@@ -86,10 +94,17 @@ public class Board implements IBoard{
         if(selection.getColour() != getPlayerToMove()) throw new UnsupportedOperationException("the selected figure is not yours");
         selectedFigure = selection;
     }
-    public void ClickAt(Position position) throws InvalidMoveException, UnsupportedOperationException {
+    public void ClickAt(Position position) throws InvalidMoveException {
         if(selectedFigure == null) SelectAt(position);
         else{
             selectedFigure.Move(position);
+            for (Figure capturedFigure : figures)
+                if(capturedFigure.getPosition().equals(selectedFigure.getPosition()) && !capturedFigure.equals(selectedFigure)) {
+                    figures.remove(capturedFigure);
+                    capturedFigures.add(capturedFigure);
+                    break;
+                }
+            selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
             isPlayerToMoveInCheck = playerToMove.equals(Colour.white) ? WhiteKing.isInCheck() : BlackKing.isInCheck();
         }
