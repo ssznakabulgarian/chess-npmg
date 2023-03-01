@@ -44,6 +44,13 @@ public class Board implements java.io.Serializable, IBoard{
             figures.add(new Pawn(new Position(x,6), Colour.black,this));
         }
 
+    public void setEnPassantPawn(Figure enPassantPawn){
+        this.enPassantPawn = enPassantPawn;
+    }
+    public Figure getEnPassantPawn(){
+        return this.enPassantPawn;
+    }
+
         figures.add(new Rook(new Position(0,0), Colour.white, this));
         figures.add(new Rook(new Position(7,0), Colour.white, this));
         figures.add(new Rook(new Position(0,7), Colour.black, this));

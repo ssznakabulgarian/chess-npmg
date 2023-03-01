@@ -10,11 +10,16 @@ public abstract class Figure {
     protected Position position;
     protected Colour colour;
     protected Board board;
+
     public Position getPosition() {
         return position;
     }
+
     public Colour getColour() {
         return colour;
+    }
+    public boolean getHasMoved(){
+        return hasMoved;
     }
     public Figure(Position position, Colour colour, Board board){
         this.position = position;
