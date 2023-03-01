@@ -18,7 +18,7 @@ public class Board implements IBoard{
         //populateBoard();
     }
 
-    public void setEnPassantPawn(Figure enPassantPawn){
+    public void setEnPassantPawn(Pawn enPassantPawn){
         this.enPassantPawn = enPassantPawn;
     }
     public Figure getEnPassantPawn(){
