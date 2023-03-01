@@ -15,6 +15,7 @@ import java.util.List;
 public class Board implements java.io.Serializable, IBoard{
     private final List<Figure> figures;
     private List<Figure> capturedFigures;
+    private Pawn enPassantPawn;
     private Figure selectedFigure = null;
     private final King WhiteKing = new King(new Position(4,0), Colour.white, this);
     private final King BlackKing = new King(new Position(4,7), Colour.black, this);
@@ -38,18 +39,18 @@ public class Board implements java.io.Serializable, IBoard{
     public Colour getPlayerToMove() {
         return playerToMove;
     }
+    public void setEnPassantPawn(Pawn enPassantPawn){
+        this.enPassantPawn = enPassantPawn;
+    }
+    public Figure getEnPassantPawn(){
+        return this.enPassantPawn;
+    }
     private void populateBoard(){
         for(int x=0;x<8;x++){
             figures.add(new Pawn(new Position(x,1), Colour.white,this));
             figures.add(new Pawn(new Position(x,6), Colour.black,this));
         }
 
-    public void setEnPassantPawn(Figure enPassantPawn){
-        this.enPassantPawn = enPassantPawn;
-    }
-    public Figure getEnPassantPawn(){
-        return this.enPassantPawn;
-    }
 
         figures.add(new Rook(new Position(0,0), Colour.white, this));
         figures.add(new Rook(new Position(7,0), Colour.white, this));
