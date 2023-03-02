@@ -91,20 +91,13 @@ public class Visualizer extends JFrame {
         } catch (InvalidMoveException | OperationNotSupportedException ex) {
             ex.printStackTrace();
         }
-        if (selectedAt == null) {
-            selectedAt = clickPosition;
-            repaint(selectedAt.getX() * fieldSize + WindowLeftMargin, (selectedAt.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
-            return;
-        }
-        if (selectedAt.equals(clickPosition)){
+        if (board.getSelectedFigure() != null) {
+            selectedAt = board.getSelectedFigure().getPosition();
+        } else {
+
             selectedAt = null;
-            repaint(clickPosition.getX() * fieldSize + WindowLeftMargin, (clickPosition.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
-            return;
         }
-        Position oldSelection = new Position(selectedAt);
-        selectedAt=clickPosition;
-        repaint(selectedAt.getX()*fieldSize+WindowLeftMargin, (selectedAt.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
-        repaint(oldSelection.getX()*fieldSize + WindowLeftMargin, (oldSelection.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
+        repaint();
     }
 
     void drawBoard(Graphics g) {
@@ -141,6 +134,7 @@ public class Visualizer extends JFrame {
             graphics.setColor(Color.RED);
             graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, fieldSize, fieldSize);
         }
+
         drawFigures(graphics);
     }
 
