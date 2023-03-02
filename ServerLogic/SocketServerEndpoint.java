@@ -8,6 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.websocket.*;
 import jakarta.websocket.server.ServerEndpoint;
 
+import javax.naming.OperationNotSupportedException;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -36,6 +37,8 @@ public class SocketServerEndpoint {
             }
         } catch (InvalidMoveException e){
             session.getBasicRemote().sendText("error: not your turn!");
+        } catch (OperationNotSupportedException e) {
+            e.printStackTrace();//internal err
         }
     }
     @OnClose
