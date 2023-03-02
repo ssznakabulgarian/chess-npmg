@@ -22,7 +22,6 @@ public class Board implements java.io.Serializable, IBoard{
     private final King WhiteKing = new King(new Position(4,0), Colour.white, this);
     private final King BlackKing = new King(new Position(4,7), Colour.black, this);
     private Colour playerToMove = Colour.white;
-    private boolean isPlayerToMoveInCheck = false;
     public Board() {
         figures = new ArrayList<>();
         capturedFigures = new ArrayList<>();
@@ -35,16 +34,11 @@ public class Board implements java.io.Serializable, IBoard{
         return new ArrayList<>(capturedFigures);
     }
     public boolean isPlayerToMoveInCheck() {
-        for (Figure Figure : figures) {
-            if(Figure.isMoveValid(playerToMove == Colour.white? WhiteKing.getPosition() : BlackKing.getPosition())){
-                return true;
-            }
+        Position playerToMoveKingPosition = playerToMove == Colour.white ? WhiteKing.getPosition() : BlackKing.getPosition();
+        for (Figure figure : figures) {
+            if(!figure.getColour().equals(playerToMove) && figure.isMoveValid(playerToMoveKingPosition)) return true;
         }
         return false;
-    }
-
-    public void setPlayerToMoveInCheck(boolean playerToMoveInCheck) {
-        isPlayerToMoveInCheck = playerToMoveInCheck;
     }
     public Figure getSelectedFigure() {
         return selectedFigure;
@@ -130,7 +124,6 @@ public class Board implements java.io.Serializable, IBoard{
             }
             selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
-            isPlayerToMoveInCheck = playerToMove.equals(Colour.white) ? WhiteKing.isInCheck() : BlackKing.isInCheck();
         }
     }
 }
