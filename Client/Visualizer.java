@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javax.imageio.ImageIO;
+import javax.naming.OperationNotSupportedException;
 import javax.swing.*;
 
 public class Visualizer extends JFrame {
@@ -87,7 +88,7 @@ public class Visualizer extends JFrame {
         Position clickPosition = new Position((e.getX()-WindowLeftMargin)/fieldSize, (e.getY()-WindowUpperMargin)/fieldSize);
         try {
             board.ClickAt(clickPosition);
-        } catch (InvalidMoveException ex) {
+        } catch (InvalidMoveException | OperationNotSupportedException ex) {
             ex.printStackTrace();
         }
         if (selectedAt == null) {
