@@ -9,7 +9,7 @@ public class Knight extends Figure{
         super(position, colour, board);
     }
 
-    boolean isMoveValid(Position newPosition) {
+    public boolean isMoveValid(Position newPosition) {
         Figure[][] boardArray = board.getField();
         if (board.isSquareEmpty(newPosition) ||
             boardArray[newPosition.x][newPosition.y].getColour() != this.colour)
