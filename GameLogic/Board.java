@@ -109,11 +109,11 @@ public class Board implements java.io.Serializable, IBoard{
                     capture(capturedFigure);
                     break;
                 }
-            Figure figureBehindEnPassantPawn = getFigureAt(new Position(enPassantPawn.getPosition().getX(), enPassantPawn.getPosition().getY() + (enPassantPawn.getColour() == Colour.white ? -1 : 1)));
-            if(enPassantPawn != null
-            && figureBehindEnPassantPawn instanceof Pawn
-            && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
-
+            if(enPassantPawn != null) {
+                Figure figureBehindEnPassantPawn = getFigureAt(new Position(enPassantPawn.getPosition().getX(), enPassantPawn.getPosition().getY() + (enPassantPawn.getColour() == Colour.white ? -1 : 1)));
+                if (figureBehindEnPassantPawn instanceof Pawn
+                && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
+            }
             enPassantPawn = null;
             selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
