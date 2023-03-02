@@ -81,8 +81,8 @@ public class Board implements java.io.Serializable, IBoard{
         figures.add(BlackKing);
     }
     public boolean isSquareEmpty(Position position) {
-        for (Figure figure : figures) if(figure.getPosition().equals(position)) return true;
-        return false;
+        for (Figure figure : figures) if(figure.getPosition().equals(position)) return false;
+        return true;
     }
     public Figure getFigureAt(Position position) {
         for (Figure figure : figures) if(figure.getPosition().equals(position)) return figure;
