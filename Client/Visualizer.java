@@ -132,14 +132,13 @@ public class Visualizer extends JFrame {
 
     }
 
-
     public void paint(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         super.paint(g);
         drawBoard(g);
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
-            graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
+            graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, fieldSize, fieldSize);
         }
         drawFigures(graphics);
     }
