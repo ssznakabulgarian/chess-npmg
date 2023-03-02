@@ -101,7 +101,7 @@ public class Board implements java.io.Serializable, IBoard{
         selectedFigure = selection;
     }
     public void ClickAt(Position position) throws InvalidMoveException, OperationNotSupportedException {
-        if(selectedFigure == null) SelectAt(position);
+        if(selectedFigure == null || (getFigureAt(position) != null && selectedFigure.getColour().equals(getFigureAt(position).getColour()))) SelectAt(position);
         else{
             selectedFigure.Move(position);
             for (Figure capturedFigure : figures)
@@ -109,12 +109,15 @@ public class Board implements java.io.Serializable, IBoard{
                     capture(capturedFigure);
                     break;
                 }
-            if(enPassantPawn != null) {
+            if(enPassantPawn != null
+            && enPassantPawn.getPosition().getY() == (enPassantPawn.getColour() == Colour.white ? 3 : 4)
+            && !selectedFigure.equals(enPassantPawn)) {
                 Figure figureBehindEnPassantPawn = getFigureAt(new Position(enPassantPawn.getPosition().getX(), enPassantPawn.getPosition().getY() + (enPassantPawn.getColour() == Colour.white ? -1 : 1)));
                 if (figureBehindEnPassantPawn instanceof Pawn
                 && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
+
+                enPassantPawn = null;
             }
-            enPassantPawn = null;
             selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
         }
