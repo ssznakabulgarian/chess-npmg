@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import javax.imageio.ImageIO;
+import javax.naming.OperationNotSupportedException;
 import javax.swing.*;
 
 public class Visualizer extends JFrame {
@@ -87,23 +88,16 @@ public class Visualizer extends JFrame {
         Position clickPosition = new Position((e.getX()-WindowLeftMargin)/fieldSize, (e.getY()-WindowUpperMargin)/fieldSize);
         try {
             board.ClickAt(clickPosition);
-        } catch (InvalidMoveException ex) {
+        } catch (InvalidMoveException | OperationNotSupportedException ex) {
             ex.printStackTrace();
         }
-        if (selectedAt == null) {
-            selectedAt = clickPosition;
-            repaint(selectedAt.getX() * fieldSize + WindowLeftMargin, (selectedAt.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
-            return;
-        }
-        if (selectedAt.equals(clickPosition)){
+        if (board.getSelectedFigure() != null) {
+            selectedAt = board.getSelectedFigure().getPosition();
+        } else {
+
             selectedAt = null;
-            repaint(clickPosition.getX() * fieldSize + WindowLeftMargin, (clickPosition.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
-            return;
         }
-        Position oldSelection = new Position(selectedAt);
-        selectedAt=clickPosition;
-        repaint(selectedAt.getX()*fieldSize+WindowLeftMargin, (selectedAt.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
-        repaint(oldSelection.getX()*fieldSize + WindowLeftMargin, (oldSelection.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
+        repaint();
     }
 
     void drawBoard(Graphics g) {
@@ -132,15 +126,15 @@ public class Visualizer extends JFrame {
 
     }
 
-
     public void paint(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         super.paint(g);
         drawBoard(g);
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
-            graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, 100, 100);
+            graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, fieldSize, fieldSize);
         }
+
         drawFigures(graphics);
     }
 
