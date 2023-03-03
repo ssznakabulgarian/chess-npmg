@@ -1,4 +1,5 @@
 package ServerLogic;
+
 import Common.Colour;
 import Common.InvalidMoveException;
 import Common.Position;
