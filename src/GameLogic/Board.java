@@ -8,7 +8,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Named;
 
 import javax.naming.OperationNotSupportedException;
-import java.awt.dnd.InvalidDnDOperationException;
 import java.util.ArrayList;
 import java.util.List;
 

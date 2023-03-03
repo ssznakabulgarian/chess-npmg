@@ -1,4 +1,5 @@
 package Client;
+
 import Common.InvalidMoveException;
 import Common.Position;
 import Figures.Figure;
