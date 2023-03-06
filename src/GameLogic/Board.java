@@ -92,10 +92,15 @@ public class Board implements java.io.Serializable, IBoard{
         for (Figure figure : figures) field[figure.getPosition().x][figure.getPosition().y] = figure;
         return field;
     }
-    private void capture(Figure figure) throws OperationNotSupportedException{
+    public void capture(Figure figure) throws OperationNotSupportedException{
         if(!figures.contains(figure)) throw new OperationNotSupportedException("this figure is not on the board!");
         figures.remove(figure);
         capturedFigures.add(figure);
+    }
+    public void unCapture(Figure figure) throws OperationNotSupportedException{
+        if(!capturedFigures.contains(figure)) throw new OperationNotSupportedException("this figure is not in the captured figures!");
+        capturedFigures.remove(figure);
+        figures.add(figure);
     }
     public void SelectAt(Position position) throws UnsupportedOperationException{
         Figure selection = getFigureAt(position);
