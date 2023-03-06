@@ -15,19 +15,11 @@ public class King extends Figure {
     public boolean isMoveValid(Position newPosition){
         if(Math.abs(position.getX() - newPosition.getX()) <= 1
         && Math.abs(position.getY() - newPosition.getY()) <= 1)
-            return !board.isSquareEmpty(newPosition) || board.getFigureAt(newPosition).getColour() != this.getColour();
+            return board.isSquareEmpty(newPosition) || !board.getFigureAt(newPosition).getColour().equals(getColour());
 
-        else return false;
+        return false;
     }
-    @Override
-    public void Move(Position position) throws InvalidMoveException {
-        Figure otherFigure = board.getFigureAt(position);
-        if(otherFigure instanceof Rook
-        && otherFigure.getColour().equals(this.colour)) castle((Rook) otherFigure);
-        else super.Move(position);
-    }
-
-    private void castle(Rook rook) throws InvalidMoveException{
+    public void castle(Rook rook) throws InvalidMoveException{
         if(hasMoved || rook.hasMoved) throw new InvalidMoveException("cannot castle after the king or the rook have moved", this, getPosition());
 
         Position rookPosition = rook.getPosition(), kingPosition = getPosition();
