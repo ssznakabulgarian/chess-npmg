@@ -22,7 +22,7 @@ public class Visualizer extends JFrame {
 
     private final int WindowUpperMargin = 30;
     private final int WindowLeftMargin = 5;
-    private final int fieldSize = 100;
+    private int fieldSize = 100;
     private Position selectedAt;
     private static Board board=new Board();
     private final BufferedImage whiteBishop, whiteRook, whiteKnight, whiteKing, whiteQueen, whitePawn, blackBishop, blackRook, blackKnight, blackKing, blackQueen, blackPawn;
@@ -30,8 +30,17 @@ public class Visualizer extends JFrame {
     public Visualizer(Board board) throws IOException {
         super("Chess");
         Visualizer.board = board;
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
+        int taskBarSize = scnMax.bottom;
 
-        setSize(800+WindowLeftMargin, 800+WindowUpperMargin);
+        int height = screenSize.height-taskBarSize-WindowUpperMargin;
+        int width = screenSize.height-taskBarSize-WindowUpperMargin;
+
+        fieldSize = width / 8;
+
+        setSize(fieldSize*8+WindowLeftMargin, fieldSize*8+WindowUpperMargin);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -133,7 +142,8 @@ public class Visualizer extends JFrame {
         drawBoard(g);
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
-            graphics.fillRect(selectedAt.getX()*100 + WindowLeftMargin, (selectedAt.getY()*100)+WindowUpperMargin, fieldSize, fieldSize);
+            graphics.fillRect(selectedAt.getX()*fieldSize + WindowLeftMargin, (selectedAt.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
+            System.out.println(fieldSize);
         }
 
         drawFigures(graphics);
