@@ -130,7 +130,16 @@ public class Board implements java.io.Serializable, IBoard{
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
         }else if (selectedFigure instanceof King        //3) selected available and clicked square is a castle
                && getFigureAt(position) instanceof Rook) {
-            (playerToMove==Colour.white ? WhiteKing : BlackKing).castle((Rook) getFigureAt(position));
+
+            Position rookPosition = position;
+            King currentKing = (playerToMove==Colour.white ? WhiteKing : BlackKing);
+
+            if(currentKing.isCastleValid((Rook) getFigureAt(rookPosition))){
+                currentKing.castle((Rook) getFigureAt(rookPosition));
+            }else{
+                SelectAt(rookPosition);
+                return;
+            }
 
             enPassantPawn = null;
             selectedFigure = null;

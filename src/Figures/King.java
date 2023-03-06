@@ -19,22 +19,29 @@ public class King extends Figure {
 
         return false;
     }
-    public void castle(Rook rook) throws InvalidMoveException{
-        if(hasMoved || rook.hasMoved) throw new InvalidMoveException("cannot castle after the king or the rook have moved", this, getPosition());
+
+    public boolean isCastleValid(Rook rook){
+        if(hasMoved || rook.hasMoved) return false;
 
         Position rookPosition = rook.getPosition(), kingPosition = getPosition();
 
         for (int x = kingPosition.getX() + (rookPosition.getX() < kingPosition.getX() ? -1 : 1); x!= rookPosition.getX(); x+= (rookPosition.getX() < kingPosition.getX() ? -1 : 1)){
-            if(board.getFigureAt(new Position(x, kingPosition.getY())) != null) throw new InvalidMoveException("cannot castle through figures", this, new Position(x, kingPosition.getY()));
+            if(board.getFigureAt(new Position(x, kingPosition.getY())) != null)
+                return false;
         }
 
         for(int i=0; i<=2; i++){
-            Position positionToCheck = new Position(kingPosition.getX() + (rookPosition.getX() < kingPosition.getX() ? -1 : 1), kingPosition.getY());
+            Position positionToCheck = new Position(kingPosition.getX() + (rookPosition.getX() < kingPosition.getX() ? -1 : 1)*i, kingPosition.getY());
             for (Figure figure : board.getFigures()) {
                 if(!figure.getColour().equals(getColour()) && figure.isMoveValid(positionToCheck))
-                    throw new InvalidMoveException("cannot castle through a check or while in check", this, positionToCheck);
+                    return false;
             }
         }
+
+        return true;
+    }
+    public void castle(Rook rook){
+        Position rookPosition = rook.getPosition(), kingPosition = getPosition();
 
         getPosition().setX(kingPosition.getX()+(rookPosition.getX() < kingPosition.getX() ? -2 : 2));
         rook.getPosition().setX(kingPosition.getX()+(rookPosition.getX() > kingPosition.getX() ? -1 : 1));
