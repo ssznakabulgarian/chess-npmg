@@ -37,7 +37,7 @@ public class King extends Figure {
         }
 
         getPosition().setX(kingPosition.getX()+(rookPosition.getX() < kingPosition.getX() ? -2 : 2));
-        rook.getPosition().setX(kingPosition.getX()+(rookPosition.getX() < kingPosition.getX() ? -1 : 1));
+        rook.getPosition().setX(kingPosition.getX()+(rookPosition.getX() > kingPosition.getX() ? -1 : 1));
 
         this.hasMoved = true;
         rook.hasMoved = true;
