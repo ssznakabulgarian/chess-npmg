@@ -11,10 +11,11 @@ public class Pawn extends Figure {
 
     @Override
     public boolean isMoveValid(Position newPosition) {
+        Position enPassantTaking = new Position(newPosition.getX(), getPosition().getY());
         if (Math.abs(newPosition.getX() - getPosition().getX()) == 1
                 && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 1 : -1)
-                && (    (board.getFigureAt(newPosition) != null && board.getFigureAt(newPosition).getColour() != getColour())
-                    ||  (board.getFigureAt(new Position(newPosition.getX(), getPosition().getY())).equals(board.getEnPassantPawn()))
+                && (    (board.getFigureAt(newPosition) != null && !board.getFigureAt(newPosition).getColour().equals(getColour()))
+                    ||  (!board.isSquareEmpty(enPassantTaking) && board.getFigureAt(enPassantTaking).equals(board.getEnPassantPawn()))
                    )
             ) return true;
 
