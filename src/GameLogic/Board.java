@@ -104,25 +104,30 @@ public class Board implements java.io.Serializable, IBoard{
         selectedFigure = selection;
     }
     public void ClickAt(Position position) throws InvalidMoveException, OperationNotSupportedException {
-        if(selectedFigure == null || (getFigureAt(position) != null && selectedFigure.getColour().equals(getFigureAt(position).getColour()))) SelectAt(position);
-        else{
+        if (selectedFigure == null) SelectAt(position); //1) no selected figure => try to select
+        else if (isSquareEmpty(position)                //2) selected available and clicked square is empty or an enemy
+            || (!isSquareEmpty(position) && !getFigureAt(position).getColour().equals(selectedFigure.getColour()))) {
             selectedFigure.Move(position);
             for (Figure capturedFigure : figures)
-                if(capturedFigure.getPosition().equals(selectedFigure.getPosition()) && !capturedFigure.equals(selectedFigure)) {
+                if (capturedFigure.getPosition().equals(selectedFigure.getPosition()) && !capturedFigure.equals(selectedFigure)) {
                     capture(capturedFigure);
                     break;
                 }
-            if(enPassantPawn != null
-            && enPassantPawn.getPosition().getY() == (enPassantPawn.getColour() == Colour.white ? 3 : 4)
-            && !selectedFigure.equals(enPassantPawn)) {
+            if (enPassantPawn != null
+                    && enPassantPawn.getPosition().getY() == (enPassantPawn.getColour() == Colour.white ? 3 : 4)
+                    && !selectedFigure.equals(enPassantPawn)) {
                 Figure figureBehindEnPassantPawn = getFigureAt(new Position(enPassantPawn.getPosition().getX(), enPassantPawn.getPosition().getY() + (enPassantPawn.getColour() == Colour.white ? -1 : 1)));
                 if (figureBehindEnPassantPawn instanceof Pawn
-                && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
-
+                        && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
                 enPassantPawn = null;
             }
             selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
+        }else if (selectedFigure instanceof King        //3) selected available and clicked square is a castle
+               && getFigureAt(position) instanceof Rook) {
+            (playerToMove==Colour.white ? WhiteKing : BlackKing).castle((Rook) getFigureAt(position));//TODO:add other things from upper condition
+        }else {                                        //4) selected available and clicked square is friendly
+            SelectAt(position);
         }
     }
 }
