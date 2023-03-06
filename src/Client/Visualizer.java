@@ -143,7 +143,6 @@ public class Visualizer extends JFrame {
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
             graphics.fillRect(selectedAt.getX()*fieldSize + WindowLeftMargin, (selectedAt.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
-            System.out.println(fieldSize);
         }
 
         drawFigures(graphics);
