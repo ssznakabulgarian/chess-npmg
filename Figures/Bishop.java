@@ -3,6 +3,7 @@ package Figures;
 import Common.Colour;
 import Common.Position;
 import GameLogic.Board;
+//import GameLogic.IBoard;
 
 public class Bishop extends Figure{
 
@@ -10,28 +11,56 @@ public class Bishop extends Figure{
     public Bishop(Position startingPosition, Colour Color, Board board) {
         super(startingPosition, Color, board);
     }
-    //array 8x8, empty spaces are zeroes
-    Figure arr[][] = board.getField();
+
     @Override
     boolean isMoveValid(Position newPosition) {
+        Figure[][] arr = board.getField();
+        if((newPosition.x>7 || newPosition.x<0) && (newPosition.y>7 || newPosition.y<0)) return false;
         if(!board.isSquareEmpty(newPosition)){
             if(board.getFigureAt(newPosition) instanceof King){
                 return false;
             }
-            if (arr[newPosition.x][newPosition.y].getColour().equals(arr[getPosition().x][getPosition().y].getColour())){
+            if (arr[newPosition.x][newPosition.y]!= null && (arr[newPosition.x][newPosition.y].getColour() == (this.colour))){
                 return false;
             }
         }
-        int x = getPosition().x - newPosition.x;
-        if(x<0) x=x*(-1);
-        int y = getPosition().y - newPosition.y;
-        if(y<0) y=y*(-1);
-        if(x == y){
+        int horizontal = getPosition().x - newPosition.x;
+        if(horizontal<0) horizontal=horizontal*(-1);
+        int vertical = getPosition().y - newPosition.y;
+        if(vertical<0) vertical=vertical*(-1);
+        if(horizontal == vertical){
 
-            for (int i = 0; i<x; i++){
-                Position between = new Position((getPosition().x+i), (getPosition().y+i));
-                if (!board.isSquareEmpty(between)){
-                    return false;
+
+            if(getPosition().x>newPosition.x){
+                for (int i = 1; i < horizontal; i++) {
+                    Position between;
+                    if(getPosition().y>newPosition.y){
+                        between = new Position((getPosition().x - i), (getPosition().y - i));
+
+                    }
+                    else{
+                        between = new Position((getPosition().x - i), (getPosition().y + i));
+
+                    }
+                    if (!board.isSquareEmpty(between)){
+                        return false;
+                    }
+                }
+            }
+            else{
+                for (int i = horizontal-1; i >0 ; i--) {
+                    Position between;
+                    if(getPosition().y>newPosition.y){
+                        between = new Position((getPosition().x + i), (getPosition().y - i));
+
+                    }
+                    else {
+                        between = new Position((getPosition().x + i), (getPosition().y + i));
+
+                    }
+                    if (!board.isSquareEmpty(between)){
+                        return false;
+                    }
                 }
             }
             return true;
@@ -39,9 +68,6 @@ public class Bishop extends Figure{
 
         return false;
     }
-
-
-
 
 
 }
