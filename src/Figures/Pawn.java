@@ -11,18 +11,21 @@ public class Pawn extends Figure {
 
     @Override
     public boolean isMoveValid(Position newPosition) {
-        if ((Math.abs(newPosition.getX() - getPosition().getX()) == 1
+        Position enPassantTaking = new Position(newPosition.getX(), getPosition().getY());
+        if (Math.abs(newPosition.getX() - getPosition().getX()) == 1
                 && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 1 : -1)
-                && (    (board.getFigureAt(newPosition) != null && board.getFigureAt(newPosition).getColour() != getColour())
-                    ||  (board.getFigureAt(new Position(newPosition.getX(), getPosition().getY())).equals(board.getEnPassantPawn()))
+                && (    (board.getFigureAt(newPosition) != null && !board.getFigureAt(newPosition).getColour().equals(getColour()))
+                    ||  (!board.isSquareEmpty(enPassantTaking) && board.getFigureAt(enPassantTaking).equals(board.getEnPassantPawn()))
                    )
-            )
-         || (newPosition.getX() == getPosition().getX()
+            ) return true;
+
+         if(newPosition.getX() == getPosition().getX()
           && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 1 : -1)
-          && board.getFigureAt(newPosition) == null)) return true;
+          && board.getFigureAt(newPosition) == null) return true;
 
         if (newPosition.getX() == getPosition().getX()
                 && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 2 : -2)
+                && !getHasMoved()
                 && board.getFigureAt(new Position(getPosition().getX(), getPosition().getY() + (getColour() == Colour.white ? 1 : -1))) == null
                 && board.getFigureAt(newPosition) == null) {
             board.setEnPassantPawn(this);

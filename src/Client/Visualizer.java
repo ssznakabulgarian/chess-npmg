@@ -1,4 +1,5 @@
 package Client;
+
 import Common.InvalidMoveException;
 import Common.Position;
 import Figures.Figure;
@@ -57,30 +58,30 @@ public class Visualizer extends JFrame {
             }
         });
 
-        URL blackBishopImageURL = getClass().getResource("/sources/figures/bishopB.png");
+        URL blackBishopImageURL = getClass().getResource("/figures/bishopB.png");
         blackBishop = ImageIO.read(Objects.requireNonNull(blackBishopImageURL));
-        URL blackRookImageURL = getClass().getResource("/sources/figures/rookB.png");
+        URL blackRookImageURL = getClass().getResource("/figures/rookB.png");
         blackRook = ImageIO.read(Objects.requireNonNull(blackRookImageURL));
-        URL blackKnightImageURL = getClass().getResource("/sources/figures/knightB.png");
+        URL blackKnightImageURL = getClass().getResource("/figures/knightB.png");
         blackKnight = ImageIO.read(Objects.requireNonNull(blackKnightImageURL));
-        URL blackKingImageURL = getClass().getResource("/sources/figures/kingB.png");
+        URL blackKingImageURL = getClass().getResource("/figures/kingB.png");
         blackKing = ImageIO.read(Objects.requireNonNull(blackKingImageURL));
-        URL blackQueenImageURL = getClass().getResource("/sources/figures/queenB.png");
+        URL blackQueenImageURL = getClass().getResource("/figures/queenB.png");
         blackQueen = ImageIO.read(Objects.requireNonNull(blackQueenImageURL));
-        URL blackPawnImageURL = getClass().getResource("/sources/figures/pawnB.png");
+        URL blackPawnImageURL = getClass().getResource("/figures/pawnB.png");
         blackPawn = ImageIO.read(Objects.requireNonNull(blackPawnImageURL));
 
-        URL whiteBishopImageURL = getClass().getResource("/sources/figures/bishopW.png");
+        URL whiteBishopImageURL = getClass().getResource("/figures/bishopW.png");
         whiteBishop = ImageIO.read(Objects.requireNonNull(whiteBishopImageURL));
-        URL whiteRookImageURL = getClass().getResource("/sources/figures/rookW.png");
+        URL whiteRookImageURL = getClass().getResource("/figures/rookW.png");
         whiteRook = ImageIO.read(Objects.requireNonNull(whiteRookImageURL));
-        URL whiteKnightImageURL = getClass().getResource("/sources/figures/knightW.png");
+        URL whiteKnightImageURL = getClass().getResource("/figures/knightW.png");
         whiteKnight = ImageIO.read(Objects.requireNonNull(whiteKnightImageURL));
-        URL whiteKingImageURL = getClass().getResource("/sources/figures/kingW.png");
+        URL whiteKingImageURL = getClass().getResource("/figures/kingW.png");
         whiteKing = ImageIO.read(Objects.requireNonNull(whiteKingImageURL));
-        URL whiteQueenImageURL = getClass().getResource("/sources/figures/queenW.png");
+        URL whiteQueenImageURL = getClass().getResource("/figures/queenW.png");
         whiteQueen = ImageIO.read(Objects.requireNonNull(whiteQueenImageURL));
-        URL whitePawnImageURL = getClass().getResource("/sources/figures/pawnW.png");
+        URL whitePawnImageURL = getClass().getResource("/figures/pawnW.png");
         whitePawn = ImageIO.read(Objects.requireNonNull(whitePawnImageURL));
     }
 
