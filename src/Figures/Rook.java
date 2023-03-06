@@ -17,20 +17,18 @@ public class Rook extends Figure {
                 && board.getField()[newPosition.getX()][newPosition.getY()].getColour().equals(getColour())))
             return false;
 
-        int loopHelper = -1;
-        // determine whether a move is vertical or horizontal (true: vertical; false: horizontal)
-        boolean direction = getPosition().getX() == newPosition.getX();
-
         // check if a figure is in the way
-        if (direction) {
-            if (getPosition().getY() < newPosition.getY()) loopHelper = 1;
-            for (int i = getPosition().getY() + loopHelper; i != newPosition.getY(); i+=loopHelper) {
-                if (board.getField()[getPosition().getX()][i] != null && i != newPosition.getY()) return false;
+        if (getPosition().getX() == newPosition.getX()) {
+            for (int i = 1; i < Math.abs((getPosition().getY()) - newPosition.getY()); i++) {
+                if (board.getField()[getPosition().getX()]
+                        [getPosition().getY() + (getPosition().getY() > newPosition.getY() ? -i : i)] != null
+                && i != Math.abs((getPosition().getY()) - newPosition.getY())) return false;
             }
         }else {
-            if (getPosition().getX() < newPosition.getX()) loopHelper = 1;
-            for (int i = getPosition().getX() + loopHelper; i != newPosition.getX(); i+=loopHelper) {
-                if (board.getField()[i][getPosition().getY()] != null && i != newPosition.getX()) return false;
+            for (int i = 1; i < Math.abs((getPosition().getX()) - newPosition.getX()); i++) {
+                if (board.getField()[getPosition().getX() + (getPosition().getX() > newPosition.getX() ? -i : i)]
+                        [getPosition().getY()] != null
+                && i != Math.abs((getPosition().getX()) - newPosition.getX())) return false;
             }
         }
         return true;
