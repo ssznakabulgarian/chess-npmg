@@ -28,7 +28,6 @@ public class Pawn extends Figure {
                 && !getHasMoved()
                 && board.getFigureAt(new Position(getPosition().getX(), getPosition().getY() + (getColour() == Colour.white ? 1 : -1))) == null
                 && board.getFigureAt(newPosition) == null) {
-            board.setEnPassantPawn(this);
             return true;
         }
 

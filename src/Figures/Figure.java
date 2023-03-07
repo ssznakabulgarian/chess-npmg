@@ -56,6 +56,8 @@ public abstract class Figure {
             throw new InvalidMoveException("this move opens a check and is thus not permitted", this, newPosition);
         }
 
+        if(this instanceof Pawn && Math.abs(newPosition.y - getPosition().y) == 2) board.setEnPassantPawn((Pawn) this);
+
         if((this instanceof Rook || this instanceof King || this instanceof Pawn) && !this.hasMoved) this.hasMoved = true;
     }
 }
