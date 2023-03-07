@@ -133,7 +133,20 @@ public class Visualizer extends JFrame {
                e.printStackTrace();
            }
        }
+    }
 
+    void drawAllPossibleMoves(Graphics2D g) {
+        if (board.getSelectedFigure() == null ) {
+            return;
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board.getSelectedFigure().isMoveValid(new Position(i, j))) {
+                    g.setColor(Color.green);
+                    g.drawOval(i*fieldSize + WindowLeftMargin, j*fieldSize+WindowUpperMargin, fieldSize, fieldSize);
+                }
+            }
+        }
     }
 
     public void paint(Graphics g) {
@@ -146,6 +159,7 @@ public class Visualizer extends JFrame {
         }
 
         drawFigures(graphics);
+        drawAllPossibleMoves(graphics);
     }
 
     public static void main(String[] args) {
