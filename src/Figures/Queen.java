@@ -40,16 +40,17 @@ public class Queen extends Figure{
             return true;
         }else if(getPosition().getX() == newPosition.getX() || getPosition().getY() == newPosition.getY()){
             if (getPosition().getX() == newPosition.getX()) {
-                for (int i = 1; i < Math.abs((getPosition().getY()) - newPosition.getY()); i++) {
+                for (int i = 1; i < vertical; i++) {
                     if (board.getField()[getPosition().getX()]
                             [getPosition().getY() + (getPosition().getY() > newPosition.getY() ? -i : i)] != null
-                            && i != Math.abs((getPosition().getY()) - newPosition.getY())) return false;
+                            && i != vertical) return false;
                 }
             }else {
-                for (int i = 1; i < Math.abs((getPosition().getX()) - newPosition.getX()); i++) {
+                for (int i = 1; i < horizontal; i++) {
                     if (board.getField()[getPosition().getX() + (getPosition().getX() > newPosition.getX() ? -i : i)]
                             [getPosition().getY()] != null
-                            && i != Math.abs((getPosition().getX()) - newPosition.getX())) return false;
+                            && i != horizontal)
+                        return false;
                 }
             }
             return true;
