@@ -42,10 +42,8 @@ public class Knight extends Figure{
                 newPosition.x == getPosition().x-2 && newPosition.y == getPosition().y+1) {
                 return true;
             }
-            if (getPosition().x-2 > -1 && getPosition().y-1 > -1 &&
-                newPosition.x == getPosition().x-2 && newPosition.y == getPosition().y-1) {
-                return true;
-            }
+            return getPosition().x - 2 > -1 && getPosition().y - 1 > -1 &&
+                    newPosition.x == getPosition().x - 2 && newPosition.y == getPosition().y - 1;
         }
         return false;
     }

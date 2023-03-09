@@ -23,14 +23,10 @@ public class Pawn extends Figure {
           && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 1 : -1)
           && board.getFigureAt(newPosition) == null) return true;
 
-        if (newPosition.getX() == getPosition().getX()
+        return newPosition.getX() == getPosition().getX()
                 && newPosition.getY() - getPosition().getY() == (getColour() == Colour.white ? 2 : -2)
                 && !getHasMoved()
                 && board.getFigureAt(new Position(getPosition().getX(), getPosition().getY() + (getColour() == Colour.white ? 1 : -1))) == null
-                && board.getFigureAt(newPosition) == null) {
-            return true;
-        }
-
-        return false;
+                && board.getFigureAt(newPosition) == null;
     }
 }

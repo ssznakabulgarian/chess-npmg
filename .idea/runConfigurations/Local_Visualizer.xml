@@ -1,0 +1,9 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Local Visualizer" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="Client.Visualizer" />
+    <module name="chess-npmg" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

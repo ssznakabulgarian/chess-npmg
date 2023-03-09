@@ -63,7 +63,7 @@ public class SocketServerEndpoint {
     }
     public void broadcastBoardState(){
         try {
-            String json = new Gson().toJson(board.getFigures());
+            String json = new Gson().toJson(board);
             WhitePlayerEndpoint.session.getBasicRemote().sendText(json);
             BlackPlayerEndpoint.session.getBasicRemote().sendText(json);
         } catch (IOException e) {
