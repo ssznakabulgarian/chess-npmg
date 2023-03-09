@@ -13,7 +13,7 @@ import java.util.List;
 
 @Named
 @ApplicationScoped
-public class Board implements java.io.Serializable, IBoard{
+public class Board implements java.io.Serializable{
     private final List<Figure> figures;
     private final List<Figure> capturedFigures;
     private Pawn enPassantPawn = null;
