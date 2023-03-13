@@ -2,5 +2,5 @@ package Common;
 
 public enum Colour {
     white,
-    black;
+    black
 }
