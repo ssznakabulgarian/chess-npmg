@@ -139,10 +139,11 @@ public class Visualizer extends JFrame {
         if (board.getSelectedFigure() == null ) {
             return;
         }
+        g.setStroke(new BasicStroke(3));
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board.getSelectedFigure().isMoveValid(new Position(i, j))) {
-                    g.setColor(Color.green);
+                    g.setColor(board.isSquareEmpty(new Position(i,j)) ? Color.green : Color.red);
                     g.drawOval(i*fieldSize + WindowLeftMargin, j*fieldSize+WindowUpperMargin, fieldSize, fieldSize);
                 }
             }
