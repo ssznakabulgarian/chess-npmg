@@ -149,6 +149,10 @@ public class Visualizer extends JFrame {
         }
     }
 
+    void openPromotionalDialogue(Graphics2D g) {
+        
+    }
+
     public void paint(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         super.paint(g);
