@@ -59,7 +59,7 @@ public class Visualizer extends JFrame {
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
+                onFieldClicked(e);
             }
 
             @Override
@@ -186,16 +186,10 @@ public class Visualizer extends JFrame {
             radioButton2.setIcon(icon2);
 
             JRadioButton radioButton3 = new JRadioButton("Rook");
-            radioButton1.setIcon(icon3);
+            radioButton3.setIcon(icon3);
 
             JRadioButton radioButton4 = new JRadioButton("Bishop");
-            radioButton2.setIcon(icon4);
-
-            ButtonGroup buttonGroup = new ButtonGroup();
-            buttonGroup.add(radioButton1);
-            buttonGroup.add(radioButton2);
-            buttonGroup.add(radioButton3);
-            buttonGroup.add(radioButton4);
+            radioButton4.setIcon(icon4);
 
             JPanel panel = new JPanel();
             panel.add(radioButton1);
