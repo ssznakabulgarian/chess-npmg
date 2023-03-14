@@ -112,7 +112,6 @@ public class Visualizer extends JFrame {
         } else {
             selectedAt = null;
         }
-        repaint();
 
         Figure lastMovedFigure = board.getLastMovedFigure();
 
@@ -124,6 +123,8 @@ public class Visualizer extends JFrame {
             if(result == 0) System.out.println("promotion dialogue failed");
             board.promote((Pawn) lastMovedFigure, result);
         }
+
+        repaint();
     }
 
     void drawBoard(Graphics g) {
@@ -168,27 +169,27 @@ public class Visualizer extends JFrame {
 
     char openPromotionalDialogue(Colour color) {
         try {
-            BufferedImage queenImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Queen").get(this);
-            BufferedImage knightImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Knight").get(this);
-            BufferedImage rookImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Rook").get(this);
-            BufferedImage bishopImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Bishop").get(this);
+            Image queenImage = ((BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Queen").get(this)).getScaledInstance(fieldSize,fieldSize,0);
+            Image knightImage = ((BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Knight").get(this)).getScaledInstance(fieldSize,fieldSize,0);
+            Image rookImage = ((BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Rook").get(this)).getScaledInstance(fieldSize,fieldSize,0);
+            Image bishopImage = ((BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Bishop").get(this)).getScaledInstance(fieldSize,fieldSize,0);
 
-            ImageIcon image1 = new ImageIcon(queenImage);
-            ImageIcon image2 = new ImageIcon(knightImage);
-            ImageIcon image3 = new ImageIcon(rookImage);
-            ImageIcon image4 = new ImageIcon(bishopImage);
+            ImageIcon icon1 = new ImageIcon(queenImage);
+            ImageIcon icon2 = new ImageIcon(knightImage);
+            ImageIcon icon3 = new ImageIcon(rookImage);
+            ImageIcon icon4 = new ImageIcon(bishopImage);
 
             JRadioButton radioButton1 = new JRadioButton("Queen");
-            radioButton1.setIcon(image1);
+            radioButton1.setIcon(icon1);
 
             JRadioButton radioButton2 = new JRadioButton("Knight");
-            radioButton2.setIcon(image2);
+            radioButton2.setIcon(icon2);
 
             JRadioButton radioButton3 = new JRadioButton("Rook");
-            radioButton1.setIcon(image3);
+            radioButton1.setIcon(icon3);
 
             JRadioButton radioButton4 = new JRadioButton("Bishop");
-            radioButton2.setIcon(image4);
+            radioButton2.setIcon(icon4);
 
             ButtonGroup buttonGroup = new ButtonGroup();
             buttonGroup.add(radioButton1);
