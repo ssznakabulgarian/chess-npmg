@@ -100,7 +100,7 @@ public class Visualizer extends JFrame {
         whitePawn = ImageIO.read(Objects.requireNonNull(whitePawnImageURL));
     }
 
-    private void onFieldClicked(MouseEvent e) throws Exception {
+    private void onFieldClicked(MouseEvent e) {
         Position clickPosition = new Position((e.getX() - WindowLeftMargin) / fieldSize, (e.getY() - WindowUpperMargin) / fieldSize);
         try {
             board.ClickAt(clickPosition);
@@ -121,8 +121,8 @@ public class Visualizer extends JFrame {
                 (lastMovedFigure.getColour().equals(Colour.black) && lastMovedFigure.getPosition().y == 0)
         )){
             char result = openPromotionalDialogue(lastMovedFigure.getColour());
-            if(result == 0) throw new Exception("promotion dialogue failed");
-            board.promote(lastMovedFigure, result);
+            if(result == 0) System.out.println("promotion dialogue failed");
+            board.promote((Pawn) lastMovedFigure, result);
         }
     }
 

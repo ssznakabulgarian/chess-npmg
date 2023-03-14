@@ -107,7 +107,7 @@ public class Board implements java.io.Serializable{
         capturedFigures.remove(figure);
         figures.add(figure);
     }
-    public void promote(Pawn pawn, char newFigure){
+    public void promote(Pawn pawn, char newFigure) throws UnsupportedOperationException{
         if(lastMovedFigure!=pawn || pawn.getPosition().getY() != (pawn.getColour().equals(Colour.white) ? 7 : 0))
             throw new UnsupportedOperationException("the provided pawn isn't on the field or is not allowed to promote");
 
