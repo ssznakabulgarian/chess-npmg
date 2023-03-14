@@ -111,13 +111,23 @@ public class Board implements java.io.Serializable{
         if(lastMovedFigure!=pawn || pawn.getPosition().getY() != (pawn.getColour().equals(Colour.white) ? 7 : 0))
             throw new UnsupportedOperationException("the provided pawn isn't on the field or is not allowed to promote");
 
-        Figure replacingFigure = switch (newFigure) {
-            case 'q' -> new Queen(pawn.getPosition(), pawn.getColour(), this);
-            case 'k' -> new Knight(pawn.getPosition(), pawn.getColour(), this);
-            case 'r' -> new Rook(pawn.getPosition(), pawn.getColour(), this);
-            case 'b' -> new Bishop(pawn.getPosition(), pawn.getColour(), this);
-            default -> throw new UnsupportedOperationException("Invalid promotion option");
-        };
+        Figure replacingFigure;
+        switch (newFigure) {
+            case 'q':
+                replacingFigure = new Queen(pawn.getPosition(), pawn.getColour(), this);
+                break;
+            case 'k':
+                replacingFigure = new Knight(pawn.getPosition(), pawn.getColour(), this);
+                break;
+            case 'r':
+                replacingFigure = new Rook(pawn.getPosition(), pawn.getColour(), this);
+                break;
+            case 'b':
+                replacingFigure = new Bishop(pawn.getPosition(), pawn.getColour(), this);
+                break;
+            default:
+                throw new UnsupportedOperationException("Invalid promotion option");
+        }
 
         figures.add(replacingFigure);
         figures.remove(pawn);
