@@ -21,6 +21,8 @@ public class Board implements java.io.Serializable{
     private final King WhiteKing = new King(new Position(4,0), Colour.white, this);
     private final King BlackKing = new King(new Position(4,7), Colour.black, this);
     private Colour playerToMove = Colour.white;
+    private Figure lastMovedFigure;
+
     public Board() {
         figures = new ArrayList<>();
         capturedFigures = new ArrayList<>();
@@ -41,6 +43,9 @@ public class Board implements java.io.Serializable{
     }
     public Figure getSelectedFigure() {
         return selectedFigure;
+    }
+    public Figure getLastMovedFigure() {
+        return lastMovedFigure;
     }
     public Colour getPlayerToMove() {
         return playerToMove;
@@ -102,6 +107,21 @@ public class Board implements java.io.Serializable{
         capturedFigures.remove(figure);
         figures.add(figure);
     }
+    public void promote(Pawn pawn, char newFigure){
+        if(lastMovedFigure!=pawn || pawn.getPosition().getY() != (pawn.getColour().equals(Colour.white) ? 7 : 0))
+            throw new UnsupportedOperationException("the provided pawn isn't on the field or is not allowed to promote");
+
+        Figure replacingFigure = switch (newFigure) {
+            case 'q' -> new Queen(pawn.getPosition(), pawn.getColour(), this);
+            case 'k' -> new Knight(pawn.getPosition(), pawn.getColour(), this);
+            case 'r' -> new Rook(pawn.getPosition(), pawn.getColour(), this);
+            case 'b' -> new Bishop(pawn.getPosition(), pawn.getColour(), this);
+            default -> throw new UnsupportedOperationException("Invalid promotion option");
+        };
+
+        figures.add(replacingFigure);
+        figures.remove(pawn);
+    }
     public void SelectAt(Position position) throws UnsupportedOperationException{
         Figure selection = getFigureAt(position);
         if(selection == null) throw new UnsupportedOperationException("the square is empty and cannot be selected");
@@ -126,6 +146,7 @@ public class Board implements java.io.Serializable{
                         && !figureBehindEnPassantPawn.getColour().equals(enPassantPawn.getColour())) capture(enPassantPawn);
                 enPassantPawn = null;
             }
+            lastMovedFigure = selectedFigure;
             selectedFigure = null;
             playerToMove = playerToMove.equals(Colour.white) ? Colour.black : Colour.white;
         }else if (selectedFigure instanceof King        //3) selected available and clicked square is a castle
