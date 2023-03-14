@@ -1,8 +1,10 @@
 package Client;
 
+import Common.Colour;
 import Common.InvalidMoveException;
 import Common.Position;
 import Figures.Figure;
+import Figures.Pawn;
 import GameLogic.Board;
 
 import java.awt.*;
@@ -24,7 +26,7 @@ public class Visualizer extends JFrame {
     private final int WindowLeftMargin = 5;
     private int fieldSize = 100;
     private Position selectedAt;
-    private static Board board=new Board();
+    private static Board board = new Board();
     private final BufferedImage whiteBishop, whiteRook, whiteKnight, whiteKing, whiteQueen, whitePawn, blackBishop, blackRook, blackKnight, blackKing, blackQueen, blackPawn;
 
     public Visualizer(Board board) throws IOException {
@@ -34,12 +36,12 @@ public class Visualizer extends JFrame {
         Insets scnMax = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
         int taskBarSize = scnMax.bottom;
 
-        int height = screenSize.height-taskBarSize-WindowUpperMargin;
-        int width = screenSize.height-taskBarSize-WindowUpperMargin;
+        int height = screenSize.height - taskBarSize - WindowUpperMargin;
+        int width = screenSize.height - taskBarSize - WindowUpperMargin;
 
         fieldSize = width / 8;
 
-        setSize(fieldSize*8+WindowLeftMargin, fieldSize*8+WindowUpperMargin);
+        setSize(fieldSize * 8 + WindowLeftMargin, fieldSize * 8 + WindowUpperMargin);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -49,18 +51,22 @@ public class Visualizer extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 onFieldClicked(e);
             }
+
             @Override
             public void mousePressed(MouseEvent e) {
 
             }
+
             @Override
             public void mouseReleased(MouseEvent e) {
 
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
 
             }
+
             @Override
             public void mouseExited(MouseEvent e) {
 
@@ -94,8 +100,8 @@ public class Visualizer extends JFrame {
         whitePawn = ImageIO.read(Objects.requireNonNull(whitePawnImageURL));
     }
 
-    private void onFieldClicked(MouseEvent e){
-        Position clickPosition = new Position((e.getX()-WindowLeftMargin)/fieldSize, (e.getY()-WindowUpperMargin)/fieldSize);
+    private void onFieldClicked(MouseEvent e) throws Exception {
+        Position clickPosition = new Position((e.getX() - WindowLeftMargin) / fieldSize, (e.getY() - WindowUpperMargin) / fieldSize);
         try {
             board.ClickAt(clickPosition);
         } catch (InvalidMoveException | OperationNotSupportedException ex) {
@@ -104,54 +110,114 @@ public class Visualizer extends JFrame {
         if (board.getSelectedFigure() != null) {
             selectedAt = board.getSelectedFigure().getPosition();
         } else {
-
             selectedAt = null;
         }
         repaint();
+
+        Figure lastMovedFigure = board.getLastMovedFigure();
+
+        if (lastMovedFigure instanceof Pawn && (
+                (lastMovedFigure.getColour().equals(Colour.white) && lastMovedFigure.getPosition().y == 7) ||
+                (lastMovedFigure.getColour().equals(Colour.black) && lastMovedFigure.getPosition().y == 0)
+        )){
+            char result = openPromotionalDialogue(lastMovedFigure.getColour());
+            if(result == 0) throw new Exception("promotion dialogue failed");
+            board.promote(lastMovedFigure, result);
+        }
     }
 
     void drawBoard(Graphics g) {
         Graphics2D graphics = (Graphics2D) g;
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if ((i+j)%2==0) graphics.setColor(Color.WHITE);
+                if ((i + j) % 2 == 0) graphics.setColor(Color.WHITE);
                 else {
                     graphics.setColor(Color.darkGray);
                 }
-                graphics.fillRect(i*fieldSize + WindowLeftMargin, j*fieldSize+WindowUpperMargin, fieldSize, fieldSize);
+                graphics.fillRect(i * fieldSize + WindowLeftMargin, j * fieldSize + WindowUpperMargin, fieldSize, fieldSize);
             }
         }
     }
 
-   void drawFigures(Graphics2D g) {
-       for (Figure figure : board.getFigures()){
-           BufferedImage img = null;
-           try {
-               img = (BufferedImage) getClass().getDeclaredField(figure.getColour().toString().toLowerCase()+figure.getClass().getSimpleName()).get(this);
-               g.drawImage(img, figure.getPosition().x * fieldSize + WindowLeftMargin,figure.getPosition().y * fieldSize+WindowUpperMargin,fieldSize,fieldSize,null);
-           } catch (IllegalAccessException | NoSuchFieldException e) {
-               e.printStackTrace();
-           }
-       }
+    void drawFigures(Graphics2D g) {
+        for (Figure figure : board.getFigures()) {
+            BufferedImage img = null;
+            try {
+                img = (BufferedImage) getClass().getDeclaredField(figure.getColour().toString().toLowerCase() + figure.getClass().getSimpleName()).get(this);
+                g.drawImage(img, figure.getPosition().x * fieldSize + WindowLeftMargin, figure.getPosition().y * fieldSize + WindowUpperMargin, fieldSize, fieldSize, null);
+            } catch (IllegalAccessException | NoSuchFieldException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     void drawAllPossibleMoves(Graphics2D g) {
-        if (board.getSelectedFigure() == null ) {
+        if (board.getSelectedFigure() == null) {
             return;
         }
         g.setStroke(new BasicStroke(3));
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board.getSelectedFigure().isMoveValid(new Position(i, j))) {
-                    g.setColor(board.isSquareEmpty(new Position(i,j)) ? Color.green : Color.red);
-                    g.drawOval(i*fieldSize + WindowLeftMargin, j*fieldSize+WindowUpperMargin, fieldSize, fieldSize);
+                    g.setColor(board.isSquareEmpty(new Position(i, j)) ? Color.green : Color.red);
+                    g.drawOval(i * fieldSize + WindowLeftMargin, j * fieldSize + WindowUpperMargin, fieldSize, fieldSize);
                 }
             }
         }
     }
 
-    void openPromotionalDialogue(Graphics2D g) {
-        
+    char openPromotionalDialogue(Colour color) {
+        try {
+            BufferedImage queenImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Queen").get(this);
+            BufferedImage knightImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Knight").get(this);
+            BufferedImage rookImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Rook").get(this);
+            BufferedImage bishopImage = (BufferedImage) getClass().getDeclaredField(color.toString().toLowerCase() + "Bishop").get(this);
+
+            ImageIcon image1 = new ImageIcon(queenImage);
+            ImageIcon image2 = new ImageIcon(knightImage);
+            ImageIcon image3 = new ImageIcon(rookImage);
+            ImageIcon image4 = new ImageIcon(bishopImage);
+
+            JRadioButton radioButton1 = new JRadioButton("Queen");
+            radioButton1.setIcon(image1);
+
+            JRadioButton radioButton2 = new JRadioButton("Knight");
+            radioButton2.setIcon(image2);
+
+            JRadioButton radioButton3 = new JRadioButton("Rook");
+            radioButton1.setIcon(image3);
+
+            JRadioButton radioButton4 = new JRadioButton("Bishop");
+            radioButton2.setIcon(image4);
+
+            ButtonGroup buttonGroup = new ButtonGroup();
+            buttonGroup.add(radioButton1);
+            buttonGroup.add(radioButton2);
+            buttonGroup.add(radioButton3);
+            buttonGroup.add(radioButton4);
+
+            JPanel panel = new JPanel();
+            panel.add(radioButton1);
+            panel.add(radioButton2);
+            panel.add(radioButton3);
+            panel.add(radioButton4);
+
+            int result = JOptionPane.showConfirmDialog(null, panel, "Select an option", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            if (result == JOptionPane.OK_OPTION) {
+                if (radioButton1.isSelected()) {
+                    return 'q';
+                } else if (radioButton2.isSelected()) {
+                    return 'k';
+                } else if (radioButton3.isSelected()) {
+                    return 'r';
+                } else if (radioButton4.isSelected()) {
+                    return 'b';
+                }
+            }
+        } catch (IllegalAccessException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public void paint(Graphics g) {
@@ -160,7 +226,7 @@ public class Visualizer extends JFrame {
         drawBoard(g);
         if (selectedAt != null) {
             graphics.setColor(Color.RED);
-            graphics.fillRect(selectedAt.getX()*fieldSize + WindowLeftMargin, (selectedAt.getY()*fieldSize)+WindowUpperMargin, fieldSize, fieldSize);
+            graphics.fillRect(selectedAt.getX() * fieldSize + WindowLeftMargin, (selectedAt.getY() * fieldSize) + WindowUpperMargin, fieldSize, fieldSize);
         }
 
         drawFigures(graphics);
