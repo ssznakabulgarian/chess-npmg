@@ -1,5 +1,11 @@
 <html>
+<head>
+    <script src="mainJS.js" type="text/javascript"></script>
+    <title>Chess</title>
+</head>
 <body>
-<h2>Hello World!</h2>
+
+<canvas id="canvas" width="640" height="640" style="border: black 1px solid"></canvas>
+
 </body>
 </html>
