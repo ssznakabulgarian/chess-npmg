@@ -27,6 +27,9 @@ public class SocketServerEndpoint {
         if(WhitePlayerEndpoint == null) { WhitePlayerEndpoint = this; playerColor = Colour.white; }
         else if (BlackPlayerEndpoint == null) { BlackPlayerEndpoint = this; playerColor = Colour.black; }
         else session.close();
+
+        String json = new Gson().toJson(board);
+        session.getBasicRemote().sendText(json);
     }
     @OnMessage
     public void onMessage(Session session, String message) throws IOException {
