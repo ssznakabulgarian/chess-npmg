@@ -1,7 +1,27 @@
 let canvas, ctx, fieldSize, figureImages;
+let socket;
 
+function onSocketOpen(){
+    console.log("connected");
+    console.log(socket);
+}
+
+function onSocketMessage(event){
+    const msg = JSON.parse(event.data);
+    //use data from msg
+    console.log(msg);
+}
+
+function onSocketError(error){
+    console.log(error);
+}
 
 window.onload = ()=>{
+    socket = new WebSocket("ws://localhost:8080/chess_npmg/server");
+    socket.onopen = onSocketOpen;
+    socket.onmessage = onSocketMessage;
+    socket.onerror = onSocketError;
+
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     fieldSize = 80;
