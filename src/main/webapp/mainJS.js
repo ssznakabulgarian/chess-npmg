@@ -1,4 +1,4 @@
-let canvas, ctx, fieldSize, figureImages;
+let canvas, ctx, fieldSize, figureImages, board;
 let socket;
 
 function onSocketOpen(){
@@ -7,9 +7,14 @@ function onSocketOpen(){
 }
 
 function onSocketMessage(event){
-    const msg = JSON.parse(event.data);
-    //use data from msg
-    console.log(msg);
+    let msg = event.data.toString();
+    if(msg.startsWith("board:")){
+        board = JSON.parse(msg.slice(6));
+        console.log(board);
+    }else{
+        //other events
+        console.log(msg);
+    }
 }
 
 function onSocketError(error){
@@ -25,6 +30,20 @@ window.onload = ()=>{
     canvas = document.getElementById("canvas");
     ctx = canvas.getContext("2d");
     fieldSize = 80;
+
+    figureImages = [];
+    figureImages["pawnW"] = document.getElementById("pawnW");
+    figureImages["pawnB"] = document.getElementById("pawnB");
+    figureImages["rookW"] = document.getElementById("rookW");
+    figureImages["rookB"] = document.getElementById("rookB");
+    figureImages["knightW"] = document.getElementById("knightW");
+    figureImages["knightB"] = document.getElementById("knightB");
+    figureImages["bishopW"] = document.getElementById("bishopW");
+    figureImages["bishopB"] = document.getElementById("bishopB");
+    figureImages["queenW"] = document.getElementById("queenW");
+    figureImages["queenB"] = document.getElementById("queenB");
+    figureImages["kingW"] = document.getElementById("kingW");
+    figureImages["kingB"] = document.getElementById("kingB");
 
     drawBoard(ctx);
 }
@@ -46,5 +65,5 @@ function drawBoard(ctx)
 
 function drawFigures()
 {
-
+    //board.
 }
